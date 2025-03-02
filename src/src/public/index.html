@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .fullbody {
+            display: flex;
+            height: 100vh;
+        }
+
+        .right {
+            flex: 1;
+            background-color: #9f4c4c;
+        }
+
+        .left {
+            flex: 1;
+            background-color: #351f60;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .create-group {
+            width: 450px;
+            height: 400px;
+            padding: 20px;
+        }
+
+        .create {
+            font-size: 44px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: aliceblue;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+        }
+
+        .firstlast {
+            display: flex;
+            gap: 10px;
+        }
+
+        .firstlast input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        .emailpassword {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .email,.password{
+            
+            height: 44px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #4d337a;
+        }
+        .firstname,.lastname{
+            height: 30px;
+            background-color: #4d337a;
+        }
+        .firstname::placeholder,.lastname::placeholder,.email::placeholder,.password::placeholder{
+            color: #a59d9d;
+            font-size: 15px;
+            padding: 10px;
+        }
+        .terms{
+            font-size: 18px;
+        }
+        .checkbox{
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .submit{
+            width: 100%;
+            height: 43px;
+            background-color: #9f58d2;
+            border-style: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .right{
+            background-image: url('https://images.unsplash.com/photo-1608209098429-d1bdca4e0039?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHVycGxlJTIwdGV4dHVyZXxlbnwwfHwwfHx8MA%3D%3D');
+        }
+    </style>
+</head>
+<body>
+
+<div class="fullbody">
+    <div class="right"></div>
+    <div class="left">
+        <div class="create-group">
+            <h1 class="create">Create an account</h1>
+            <div class="firstlast">
+                <input type="text" placeholder="First name" class="firstname">
+                <input type="text" placeholder="Last name" class="lastname">
+            </div>
+            <div class="emailpassword">
+                <input type="email" placeholder="Email" class="email">
+                <input type="password" placeholder="Enter your password" class="password">
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="terms">
+                <label for="terms" style="color: #a59d9d;" class="terms">I agree to the terms and conditions</label>
+            </div>
+            <div class="create">
+                <button class="submit">Create account</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const email=document.getElementsByClassName("email")[0];
+    const password=document.getElementsByClassName("password")[0];
+    const submit=document.getElementsByClassName("submit")[0];
+
+    submit.addEventListener("click",async()=>{
+        if(email.value==""||password.value==""){
+            alert("Please fill all the required fields");
+        }else{
+            const response=await fetch("http://localhost:5000/register",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    username:email.value,
+                    password:password.value
+                })
+            });
+        
+    const result=await response.json();
+    if(response.ok){
+        alert("Account created successfully");
+    }else{
+        alert("Account creation failed");
+    }
+    }
+    })
+</script>
+</body>
+</html>
